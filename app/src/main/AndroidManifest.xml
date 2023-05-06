@@ -50,6 +50,12 @@
             android:screenOrientation="locked"
             android:launchMode="singleTop">
         </activity>
+        <activity android:name=".feature.auth.ui.ForgetPassActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,7 +1,5 @@
 package bk.ltuddd.iotapp.feature.main.homedashboard;
 
-import android.view.View;
-
 import com.google.firebase.auth.FirebaseAuth;
 
 import bk.ltuddd.iotapp.core.base.BaseActivity;

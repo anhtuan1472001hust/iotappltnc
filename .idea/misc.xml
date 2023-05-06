@@ -16,6 +16,7 @@
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/icon_eye_password.xml" value="0.111" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout-v23/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_config_account.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_forget_pass.xml" value="0.25" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_register.xml" value="0.14736842105263157" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_splash.xml" value="0.20427350427350427" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_validate_otp.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/dialog_loading_view.xml" value="0.25" />
+        <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/forget_pass_activity.xml" value="0.25" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/item_toast_default.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/asus/AndroidStudioProjects/MyApplication/app/src/main/res/layout/register_activity.xml" value="0.25" />
       </map>

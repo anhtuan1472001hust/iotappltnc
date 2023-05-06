@@ -44,6 +44,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewMo
             }
             binding.edtPassword.setSelection(binding.edtPassword.length());
         });
+        binding.tvForgotPassword.setOnClickListener(v -> openActivity(ForgetPassActivity.class));
     }
 
     @Override

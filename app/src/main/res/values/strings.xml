@@ -30,4 +30,7 @@
     <string name="success_login">Đăng nhập thành công</string>
     <string name="error_login">Mật khẩu không hợp lệ</string>
     <string name="logout">Đăng xuất</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="forgot_password_guid">Nhập số điện thoại đã đăng ký, \nhệ thống sẽ gửi mã xác nhận cho bạn.</string>
+
 </resources>

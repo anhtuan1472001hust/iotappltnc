@@ -56,7 +56,7 @@ public class AuthViewModel extends BaseViewModel {
 
     public SingleLiveEvent<Boolean> isAccountExisted = new SingleLiveEvent<>();
 
-    private final NetWorkExtensions netWorkExtensions = new NetWorkExtensions();
+//    private final NetWorkExtensions netWorkExtensions = new NetWorkExtensions();
 
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
