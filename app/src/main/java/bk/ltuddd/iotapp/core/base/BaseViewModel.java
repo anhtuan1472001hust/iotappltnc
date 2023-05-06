@@ -63,7 +63,7 @@ public abstract class BaseViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void setErrorStringId(int errorStringId) {
+    public void setErrorStringId(Integer errorStringId) {
         errorMessage.setValue(errorStringId);
     }
 

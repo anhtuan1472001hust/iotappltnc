@@ -29,11 +29,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void addViewListener() {
-//        binding.tvLogout.setOnClickListener(v -> {
-////            FirebaseAuth.getInstance().signOut();
-////            openActivity(LoginActivity.class);
-//            onLoading(false);
-//        });
+        binding.btnLogout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            openActivity(LoginActivity.class);
+        });
 
     }
 }

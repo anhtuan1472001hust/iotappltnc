@@ -25,7 +25,9 @@
     <string name="error_create_user">Đăng ký tài khoản thất bại</string>
     <string name="success_create_user">Đăng ký tài khoản thành công</string>
     <string name="error_empty_phone_password">Số điện thoại và mật khẩu không được để trống</string>
-    <string name="error_authentication">Tài khoản không hợp lệ</string>
+    <string name="error_authentication">Tài khoản không tồn tại</string>
     <string name="error_account_existed">Tài khoản đã tồn tại</string>
     <string name="success_login">Đăng nhập thành công</string>
+    <string name="error_login">Mật khẩu không hợp lệ</string>
+    <string name="logout">Đăng xuất</string>
 </resources>

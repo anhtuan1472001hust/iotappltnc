@@ -1,11 +1,7 @@
 package bk.ltuddd.iotapp.feature.auth.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
@@ -83,10 +79,8 @@ public class AuthRepositoryImpl implements AuthRepository{
                             for (DataSnapshot dataSnapShot: snapshot.getChildren()) {
                                 User user = dataSnapShot.getValue(User.class);
                                 if (user != null) {
-                                    if (user.getPassword().equals(password)) {
-                                        emitter.onSuccess(user);
-                                        return;
-                                    }
+                                    emitter.onSuccess(user);
+                                    return;
                                 }
                             }
                         }

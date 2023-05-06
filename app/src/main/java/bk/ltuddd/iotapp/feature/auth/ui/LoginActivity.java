@@ -2,6 +2,7 @@ package bk.ltuddd.iotapp.feature.auth.ui;
 
 import android.content.Intent;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
@@ -47,12 +48,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewMo
 
     @Override
     public void addDataObserve() {
+        super.addDataObserve();
         viewModel.userResponse().observe(this,user -> {
-            if (user != null) {
+            String password = binding.edtPassword.getText().toString();
+            if (password.equals(user.getPassword())) {
                 showToastShort(getString(R.string.success_login));
                 openActivity(MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK, Intent.FLAG_ACTIVITY_CLEAR_TOP, Intent.FLAG_ACTIVITY_NEW_TASK);
             } else {
-                showToastShort(getString(R.string.error_authentication));
+                showToastShort(getString(R.string.error_login));
             }
         });
     }

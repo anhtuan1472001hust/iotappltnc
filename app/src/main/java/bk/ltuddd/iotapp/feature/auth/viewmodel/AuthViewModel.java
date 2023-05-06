@@ -1,6 +1,7 @@
 package bk.ltuddd.iotapp.feature.auth.viewmodel;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -219,7 +220,9 @@ public class AuthViewModel extends BaseViewModel {
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(_userResponse::setValue, throwable -> {
-                                        }
+                                    setErrorStringId(R.string.error_authentication);
+                                    Log.e("Error",throwable.getMessage());
+                                }
                                 )
                 );
 //            } else {
