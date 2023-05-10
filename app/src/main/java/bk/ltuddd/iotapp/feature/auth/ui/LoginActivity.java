@@ -2,13 +2,12 @@ package bk.ltuddd.iotapp.feature.auth.ui;
 
 import android.content.Intent;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
 import bk.ltuddd.iotapp.databinding.ActivityLoginBinding;
 import bk.ltuddd.iotapp.feature.auth.viewmodel.AuthViewModel;
-import bk.ltuddd.iotapp.feature.main.homedashboard.MainActivity;
+import bk.ltuddd.iotapp.feature.main.ui.activity.MainActivity;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewModel> {
 

@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
 import bk.ltuddd.iotapp.databinding.ActivityConfigAccountBinding;
 import bk.ltuddd.iotapp.feature.auth.viewmodel.AuthViewModel;
-import bk.ltuddd.iotapp.feature.main.homedashboard.MainActivity;
+import bk.ltuddd.iotapp.feature.main.ui.activity.MainActivity;
 import bk.ltuddd.iotapp.utils.Constant;
 
 
@@ -91,6 +94,7 @@ public class ConfigureAccountActivity extends BaseActivity<ActivityConfigAccount
                 if (password.equals(confirmPassword)) {
                     onLoading(true);
                     viewModel.createUserWithPhoneAndPassword(confirmPassword, sharedPreferences.getString(Constant.KEY_PHONE_NUMBER_PREF, Constant.EMPTY_STRING));
+                    sharedPreferences.edit().putString(Constant.KEY_UID_PREF, FirebaseAuth.getInstance().getCurrentUser().getUid()).apply();
                 } else {
                     showToastShort(getString(R.string.error_different_password));
                 }

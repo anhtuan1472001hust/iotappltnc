@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mukesh.OnOtpCompletionListener;
 
 import bk.ltuddd.iotapp.R;

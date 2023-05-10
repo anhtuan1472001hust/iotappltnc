@@ -17,8 +17,6 @@ import io.reactivex.Single;
 
 public class AuthRepositoryImpl implements AuthRepository{
 
-
-
     @Override
     public Completable sendOtp(PhoneAuthOptions phoneAuthOptions) {
         return Completable.create( emitter -> {

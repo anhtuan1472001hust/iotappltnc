@@ -1,4 +1,4 @@
-package bk.ltuddd.iotapp.feature.main.homedashboard;
+package bk.ltuddd.iotapp.feature.main.ui.activity;
 
 import android.content.Intent;
 import android.os.Handler;

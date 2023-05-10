@@ -29,5 +29,12 @@
     <color name="white_50">#80FFFFFF</color>
     <color name="dark_blue_1">#31465F</color>
     <color name="blue_gradient_end">#4CA9DF</color>
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+    <color name="profileTextColor">#FF9301</color>
 
 </resources>

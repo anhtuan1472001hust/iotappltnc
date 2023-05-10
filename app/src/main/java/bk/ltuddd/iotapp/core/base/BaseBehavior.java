@@ -1,12 +1,5 @@
 package bk.ltuddd.iotapp.core.base;
 
-
-/**
- * Created by @Author: TuanNNA
- * Create Time : 11:00 - 28/04/2023
- * Interface BaseBehavior định nghĩa những phương thức để tương tác với app
- */
-
 public interface BaseBehavior {
 
     /**

@@ -32,5 +32,8 @@
     <string name="logout">Đăng xuất</string>
     <string name="forgot_password">Quên mật khẩu</string>
     <string name="forgot_password_guid">Nhập số điện thoại đã đăng ký, \nhệ thống sẽ gửi mã xác nhận cho bạn.</string>
+    <string name="drawer_menu_label_home">Trang chủ</string>
+    <string name="drawer_menu_label_settings">Cài đặt</string>
+    <string name="drawer_menu_label_logout">Đăng xuất</string>
 
 </resources>

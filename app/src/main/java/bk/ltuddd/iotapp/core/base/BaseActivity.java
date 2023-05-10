@@ -21,13 +21,6 @@ import bk.ltuddd.iotapp.core.component.resource.ResourceServiceImpl;
 import bk.ltuddd.iotapp.databinding.DialogLoadingViewBinding;
 import bk.ltuddd.iotapp.utils.extensions.Extensions;
 
-/**
- * Created by @Author: TuanNNA
- * Create Time : 11:00 - 28/04/2023
- * Lớp BaseActivity để mọi class Activity khác kế thừa
- * Các hàm trừu tượng (abstract function) là các hàm bắt buộc phải override
- */
-
 public abstract class BaseActivity<VB extends ViewBinding, VM extends BaseViewModel> extends AppCompatActivity implements BaseBehavior {
 
     protected VB binding;
@@ -108,17 +101,26 @@ public abstract class BaseActivity<VB extends ViewBinding, VM extends BaseViewMo
     /**
      * Hàm này để thêm 1 fragment vào 1 activity
      */
-    protected void addFragment(Fragment fragment, String tag, boolean animate) {
+    protected void addFragment(BaseFragment<?,?> fragment, String tag, boolean animate) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(tag != null ? tag : fragment.getTagFragment());
         if (animate) {
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         } else {
             fragmentTransaction.setCustomAnimations(0, 0);
         }
         hideKeyboard();
-        fragmentTransaction.add(fragment, tag);
-        fragmentTransaction.commitAllowingStateLoss();
+        fragmentTransaction.add(android.R.id.content, fragment, tag);
+        fragmentTransaction.commit();
+    }
+
+    protected void addFragment(BaseFragment<?,?> fragment, boolean animate) {
+        addFragment(
+                fragment,
+                fragment.getTagFragment(),
+                animate
+        );
     }
 
     /**

@@ -1,6 +1,7 @@
 package bk.ltuddd.iotapp.feature.auth.ui;
 
 import android.content.Intent;
+import android.view.View;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
@@ -46,6 +47,9 @@ public class ForgetPassActivity extends BaseActivity<ActivityForgetPassBinding, 
         binding.btnNext.setOnClickListener(v -> {
             String phoneNumber = binding.edtUsername.getText().toString();
             viewModel.checkExistedAccount(phoneNumber);
+        });
+        binding.toolbar.setNavigationOnClickListener(view -> {
+            openActivity(LoginActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TOP);
         });
 
     }
