@@ -17,12 +17,6 @@ import bk.ltuddd.iotapp.utils.livedata.SingleLiveEvent;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by @Author: TuanNNA
- * Create Time : 11:00 - 28/04/2023
- * Lớp BaseViewModel để mọi class ViewModel khác kế thừa và thực hiện các logic nghiệp vụ
- * Là nơi trung gian để kết nối giữa logic view và lớp data, tách biệt view với data
- */
 public abstract class BaseViewModel extends ViewModel {
 
     private WeakReference<Context> contextRef;

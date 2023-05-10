@@ -1,5 +1,6 @@
 package bk.ltuddd.iotapp.core.base;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,18 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
-/**
- * Created by @Author: TuanNNA
- * Create Time : 11:00 - 28/04/2023
- * Lớp BaseFragment để mọi class Fragment khác kế thừa
- * Các hàm trừu tượng (abstract function) là các hàm bắt buộc phải override
- */
+import bk.ltuddd.iotapp.R;
 
 public abstract class BaseFragment<VB extends ViewBinding,VM extends BaseViewModel> extends Fragment implements BaseBehavior {
 
     protected VB viewBinding;
 
     protected VM viewModel;
+
+    private Dialog dialogLoading = null;
 
     @Nullable
     @Override
@@ -38,11 +36,15 @@ public abstract class BaseFragment<VB extends ViewBinding,VM extends BaseViewMod
         viewModel = new ViewModelProvider(requireActivity()).get(getViewModelClass());
         onCommonViewLoaded();
         addViewListener();
+        addDataObserve();
     }
 
     protected abstract VB getBinding(LayoutInflater inflater);
 
     protected abstract Class<VM> getViewModelClass();
+
+    protected abstract String getTagFragment();
+
 
     /**
      *  Hàm này để mở 1 activity khác
@@ -69,6 +71,25 @@ public abstract class BaseFragment<VB extends ViewBinding,VM extends BaseViewMod
             intent.addFlags(flag);
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onLoading(Boolean isLoading) {
+        if (isLoading) {
+            getDialogLoading().show();
+        } else {
+            getDialogLoading().dismiss();
+        }
+    }
+
+    private Dialog getDialogLoading() {
+        if (dialogLoading == null) {
+            dialogLoading = new Dialog(getActivity(), R.style.AppTheme_FullScreen_LightStatusBar);
+            if (dialogLoading.getWindow() != null) {
+                dialogLoading.getWindow().setBackgroundDrawableResource(R.color.white_50);
+            }
+        }
+        return dialogLoading;
     }
 
 

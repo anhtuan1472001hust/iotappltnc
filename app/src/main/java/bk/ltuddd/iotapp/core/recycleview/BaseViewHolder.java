@@ -1,16 +1,15 @@
 package bk.ltuddd.iotapp.core.recycleview;
 
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
-abstract class BaseViewHolder<T, VB extends ViewBinding> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<VB extends ViewBinding> extends RecyclerView.ViewHolder {
 
     private final VB viewBinding;
 
-    public BaseViewHolder(@NonNull View itemView, @NonNull VB viewBinding) {
+    public BaseViewHolder(@NonNull VB viewBinding) {
         super(viewBinding.getRoot());
         this.viewBinding = viewBinding;
     }
@@ -19,5 +18,5 @@ abstract class BaseViewHolder<T, VB extends ViewBinding> extends RecyclerView.Vi
         return viewBinding;
     }
 
-    public abstract void bindData(T data);
+    public abstract void bindData(int position);
 }
