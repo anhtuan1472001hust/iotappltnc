@@ -23,8 +23,8 @@ public abstract class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position, @NonNull List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
+    public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position) {
+        holder.bindData(position);
     }
 
     @Override

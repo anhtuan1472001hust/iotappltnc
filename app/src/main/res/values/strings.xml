@@ -35,5 +35,18 @@
     <string name="drawer_menu_label_home">Trang chủ</string>
     <string name="drawer_menu_label_settings">Cài đặt</string>
     <string name="drawer_menu_label_logout">Đăng xuất</string>
+    <string name="add_device">Thêm thiết bị</string>
+    <string name="agree">Đồng ý</string>
+    <string name="dialog_cancel">Hủy</string>
+    <string name="empty_password">Bạn chưa nhập mã kích hoạt</string>
+    <string name="invalid_password_length">Mã kích hoạt dài ít nhất 6 ký tự</string>
+    <string name="expire_success">Kích hoạt thiết bị thành công</string>
+    <string name="notification">Vui lòng nhập serial thiết bị bạn muốn kích hoạt</string>
+    <string name="serial_fail">Số serial không hợp lệ</string>
+    <string name="state_on">ON</string>
+    <string name="state_off">OFF</string>
+
+
+
 
 </resources>

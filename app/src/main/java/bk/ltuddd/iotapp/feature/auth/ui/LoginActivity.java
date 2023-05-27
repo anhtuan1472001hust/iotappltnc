@@ -1,13 +1,17 @@
 package bk.ltuddd.iotapp.feature.auth.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
 import bk.ltuddd.iotapp.databinding.ActivityLoginBinding;
 import bk.ltuddd.iotapp.feature.auth.viewmodel.AuthViewModel;
 import bk.ltuddd.iotapp.feature.main.ui.activity.MainActivity;
+import bk.ltuddd.iotapp.utils.Constant;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewModel> {
 
@@ -69,6 +73,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewMo
             showToastShort(getString(R.string.activity_config_account_alert_config_account_label));
         }
     }
-
 
 }

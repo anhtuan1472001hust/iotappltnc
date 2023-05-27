@@ -36,5 +36,9 @@
     <color name="blackTextColor">#000</color>
     <color name="profileEditTextColor">#707070</color>
     <color name="profileTextColor">#FF9301</color>
+    <color name="light_background">#F1F5FC</color>
+    <color name="grey_light">#9EB6C3</color>
+    <color name="green_light"> #008000</color>
+    <color name="red">#FF0000</color>
 
 </resources>

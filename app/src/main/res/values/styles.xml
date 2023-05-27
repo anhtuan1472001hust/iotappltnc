@@ -154,5 +154,18 @@
             <item name="android:minWidth">250dp</item>
         </style>
 
+    <style name="ButtonBorderBlue" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/light_blue</item>
+        <item name="android:layout_height">@dimen/size_50</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/size_12</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAppearance">@style/TextTitleSemiBoldBlueDark</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:background">@drawable/bg_button_corner_30_border_blue</item>
+    </style>
 
-    </resources>
+
+
+</resources>

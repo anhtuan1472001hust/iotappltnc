@@ -2,6 +2,7 @@ package bk.ltuddd.iotapp.feature.auth.viewmodel;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,11 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -23,6 +31,7 @@ import bk.ltuddd.iotapp.core.base.BaseViewModel;
 import bk.ltuddd.iotapp.data.model.User;
 import bk.ltuddd.iotapp.feature.auth.repository.AuthRepository;
 import bk.ltuddd.iotapp.feature.auth.repository.AuthRepositoryImpl;
+import bk.ltuddd.iotapp.utils.Constant;
 import bk.ltuddd.iotapp.utils.extensions.NetWorkExtensions;
 import bk.ltuddd.iotapp.utils.livedata.SingleLiveEvent;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -48,6 +57,8 @@ public class AuthViewModel extends BaseViewModel {
 
     public SingleLiveEvent<Boolean> registerSuccess = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<Boolean> isLogin = new SingleLiveEvent<>();
+
     private final MutableLiveData<User> _userResponse = new MutableLiveData<>();
 
     public LiveData<User> userResponse() {
@@ -70,10 +81,16 @@ public class AuthViewModel extends BaseViewModel {
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//            final String code = phoneAuthCredential.getSmsCode();
-//            if (code != null) {
-//
-//            }
+            FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            String token = authResult.getUser().getIdToken(false).getResult().getToken();
+                            Log.e("Bello",token);
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putString(Constant.KEY_AUTH_TOKEN,token).apply();
+                        }
+                    });
         }
 
         @Override
@@ -249,6 +266,27 @@ public class AuthViewModel extends BaseViewModel {
 //            }
 //            return null;
 //        });
+
+    public void checkIsLogin(String userUid) {
+        if (userUid != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userUid);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        isLogin.setValue(true);
+                    } else {
+                        isLogin.setValue(false);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Lỗi khi truy vấn Realtime Database
+                }
+            });
+        }
+    }
 }
 
 
