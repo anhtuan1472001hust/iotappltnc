@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import bk.ltuddd.iotapp.core.base.BaseActivity;
 import bk.ltuddd.iotapp.feature.auth.ui.LoginActivity;
 import bk.ltuddd.iotapp.databinding.ActivitySplashBinding;
@@ -31,6 +33,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, AuthView
     public void addDataObserve() {
         super.addDataObserve();
         viewModel.isLogin.observe(this, isLogin -> {
+            Log.e("isLogin",isLogin.toString());
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 if (isLogin) {
@@ -47,6 +50,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, AuthView
     public void onCommonViewLoaded() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME,Context.MODE_PRIVATE);
         String uid = sharedPreferences.getString(Constant.KEY_UID_PREF, Constant.EMPTY_STRING);
+        Log.e("userUid",uid);
         viewModel.checkIsLogin(uid);
     }
 

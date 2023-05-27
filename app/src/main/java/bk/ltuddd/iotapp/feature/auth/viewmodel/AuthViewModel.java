@@ -85,10 +85,6 @@ public class AuthViewModel extends BaseViewModel {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            String token = authResult.getUser().getIdToken(false).getResult().getToken();
-                            Log.e("Bello",token);
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
-                            sharedPreferences.edit().putString(Constant.KEY_AUTH_TOKEN,token).apply();
                         }
                     });
         }
