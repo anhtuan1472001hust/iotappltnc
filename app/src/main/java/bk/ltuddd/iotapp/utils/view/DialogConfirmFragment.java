@@ -21,7 +21,6 @@ public class DialogConfirmFragment extends DialogFragment {
 
     private DialogDevicePasswordBinding dialogDevicePasswordBinding;
     private OnPasswordEnteredListener listener;
-    private MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
 
 
     public static DialogConfirmFragment newInstance() {
@@ -49,10 +48,10 @@ public class DialogConfirmFragment extends DialogFragment {
         dialogDevicePasswordBinding.btnCancel.setOnClickListener(v -> {
             dismiss();
         });
-        dialogDevicePasswordBinding.btnAccept.setOnClickListener(v -> {
-            String password = dialogDevicePasswordBinding.edtPassword.getText().toString();
-//            mainViewModel.queryDeviceBySerial(password);
-        });
+//        dialogDevicePasswordBinding.btnAccept.setOnClickListener(v -> {
+//            String password = dialogDevicePasswordBinding.edtPassword.getText().toString();
+////            mainViewModel.queryDeviceBySerial(password);
+//        });
     }
 
     public void setOnPasswordEnteredListener(OnPasswordEnteredListener listener) {

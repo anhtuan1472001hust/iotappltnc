@@ -55,8 +55,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, AuthViewMo
         super.addDataObserve();
         viewModel.userResponse().observe(this,user -> {
             String password = binding.edtPassword.getText().toString();
+            String phoneNumber = binding.edtPhone.getText().toString();
             if (password.equals(user.getPassword())) {
                 showToastShort(getString(R.string.success_login));
+                SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME,Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString(Constant.KEY_PHONE_NUMBER_PREF,phoneNumber).apply();
                 openActivity(MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK, Intent.FLAG_ACTIVITY_CLEAR_TOP, Intent.FLAG_ACTIVITY_NEW_TASK);
             } else {
                 showToastShort(getString(R.string.error_login));

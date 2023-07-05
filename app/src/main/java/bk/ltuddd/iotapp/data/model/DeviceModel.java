@@ -1,14 +1,19 @@
 package bk.ltuddd.iotapp.data.model;
 
-public class DeviceModel {
+import java.io.Serializable;
+
+public class DeviceModel implements Serializable {
 
     private double humid;
     private double temp;
     private long serial;
     private String name;
     private String type;
+
     // state : 1 -> on , 0 -> off
     private int state;
+
+    private boolean selected = false;
 
 
 
@@ -64,5 +69,13 @@ public class DeviceModel {
 
     public void setHumid(double humid) {
         this.humid = humid;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

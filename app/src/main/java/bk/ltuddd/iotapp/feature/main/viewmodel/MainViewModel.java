@@ -4,13 +4,12 @@ package bk.ltuddd.iotapp.feature.main.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseViewModel;
 import bk.ltuddd.iotapp.data.model.DeviceModel;
-import bk.ltuddd.iotapp.data.model.Dht11;
-import bk.ltuddd.iotapp.data.model.Lamp;
 import bk.ltuddd.iotapp.data.model.User;
 import bk.ltuddd.iotapp.feature.main.repository.MainRepository;
 import bk.ltuddd.iotapp.feature.main.repository.MainRepositoryImpl;
@@ -36,28 +35,26 @@ public class MainViewModel extends BaseViewModel {
         return _deviceType;
     }
 
-    private MutableLiveData<String> _numberSerial = new MutableLiveData<>();
-
-    public LiveData<String> numberSerial() {
-        return _numberSerial;
-    }
-
-    private MutableLiveData<List<Dht11>> _listDht11 = new MutableLiveData<>();
-    public LiveData<List<Dht11>> listDht11() {
-        return _listDht11;
-    }
-
-    private MutableLiveData<List<Lamp>> _listLamp = new MutableLiveData<>();
-    public LiveData<List<Lamp>> listLamp() {
-        return _listLamp;
-    }
-
     private MutableLiveData<List<DeviceModel>> _listDeviceModel = new MutableLiveData<>();
     public LiveData<List<DeviceModel>> listDeviceModel() {
         return _listDeviceModel;
     }
 
-    private SingleLiveEvent<Boolean> isUpdateSuccess = new SingleLiveEvent<>();
+    private MutableLiveData<DeviceModel> _deviceModel = new MutableLiveData<>();
+    public LiveData<DeviceModel> deviceModel() {
+        return _deviceModel;
+    }
+
+    public SingleLiveEvent<Boolean> isUpdateSuccess = new SingleLiveEvent<>();
+
+    public SingleLiveEvent<Boolean> addDeviceToUserSuccess = new SingleLiveEvent<>();
+
+    private MutableLiveData<List<DeviceModel>> _listUserDeviceModel = new MutableLiveData<>();
+    public LiveData<List<DeviceModel>> listUserDeviceModel() {
+        return _listUserDeviceModel;
+    }
+
+    public List<DeviceModel> listDeviceSelected = new ArrayList<>();
 
 
     public void updateUserInfo(User user, String userUid) {
@@ -97,9 +94,9 @@ public class MainViewModel extends BaseViewModel {
         );
     }
 
-    public void getListDevice() {
+    public void getListDevice(List<Long> serials) {
         compositeDisposable.add(
-                mainRepository.getListDevice()
+                mainRepository.getListDevice(serials)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -116,50 +113,64 @@ public class MainViewModel extends BaseViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 isSuccess -> isUpdateSuccess.setValue(isSuccess),
-                                throwable -> setErrorStringId(R.string.error_send_otp_from_firebase)
+                                throwable -> {
+                                    setErrorStringId(R.string.error_send_otp_from_firebase);
+                                }
                         )
         );
     }
 
-//    public void getListDHT11() {
-//        compositeDisposable.add(
-//                mainRepository.getListDHT11()
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(
-//                                listDht11 -> _listDht11.setValue(listDht11),
-//                                throwable ->  setErrorStringId(R.string.error_send_otp_from_firebase)
-//                        )
-//        );
-//    }
-//
-//    public void getListLamp() {
-//        compositeDisposable.add(
-//                mainRepository.getListLamp()
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(
-//                                listLamp -> _listLamp.setValue(listLamp),
-//                                throwable ->  setErrorStringId(R.string.error_send_otp_from_firebase)
-//                        )
-//        );
-//    }
-//
-//    public void queryDeviceBySerial(String serial) {
-//        compositeDisposable.add(
-//                mainRepository.queryDeviceBySerial(serial)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(
-//                                serial -> {
-//                                    _numberSerial.setValue(serial);
-//                                }, throwable ->{
-//                                    setErrorStringId(R.string.error_send_otp_from_firebase);
-//                                }
-//                        )
-//        );
-//
-//    }
+    public void getDeviceBySerial(long serial) {
+        compositeDisposable.add(
+                mainRepository.queryDeviceBySerial(serial)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                device -> _deviceModel.setValue(device),
+                                throwable -> {
+                                    setErrorStringId(R.string.serial_not_exist);
+                                    setLoading(false);
+                                }
+                        )
+        );
+    }
+
+    public void addDeviceToUser(DeviceModel deviceModel, String phoneNumber) {
+        compositeDisposable.add(
+                mainRepository.updateUserDevice(deviceModel, phoneNumber)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                isSuccess -> {
+                                    addDeviceToUserSuccess.setValue(isSuccess);
+                                }
+                        )
+        );
+    }
+
+    public void getListUserDevice(String phoneNumber) {
+        compositeDisposable.add(
+                mainRepository.getListUserDevice(phoneNumber)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                listUserDevice -> {
+                                    _listUserDeviceModel.setValue(listUserDevice);
+                                }, throwable -> setErrorStringId(R.string.error_send_otp_from_firebase)
+
+                        )
+        );
+    }
+
+    public void removeDevice(List<String> listDeviceName, String phoneNumber) {
+        compositeDisposable.add(
+                mainRepository.removeDevice(listDeviceName, phoneNumber)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe()
+        );
+    }
+
 
 
 

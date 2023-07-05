@@ -1,30 +1,33 @@
 package bk.ltuddd.iotapp.feature.main.ui.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import java.util.function.Consumer;
+
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.base.BaseActivity;
-import bk.ltuddd.iotapp.data.model.DeviceType;
+import bk.ltuddd.iotapp.data.model.DeviceModel;
 import bk.ltuddd.iotapp.databinding.ActivityAddDeviceBinding;
 import bk.ltuddd.iotapp.feature.main.ui.adapter.AddDeviceAdapter;
 import bk.ltuddd.iotapp.feature.main.viewmodel.MainViewModel;
 import bk.ltuddd.iotapp.utils.Constant;
-import bk.ltuddd.iotapp.utils.view.DialogConfirmFragment;
+import bk.ltuddd.iotapp.utils.view.DialogView;
 
 public class AddDeviceActivity extends BaseActivity<ActivityAddDeviceBinding, MainViewModel> {
 
     private AddDeviceAdapter addDeviceAdapter = new AddDeviceAdapter();
     private GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-//    private DialogConfirmFragment dialogConfirmFragment = new DialogConfirmFragment();
-    private String serialNumber;
+    private DeviceModel device = new DeviceModel();
 
     @Override
     protected ActivityAddDeviceBinding getViewBinding() {
@@ -42,8 +45,21 @@ public class AddDeviceActivity extends BaseActivity<ActivityAddDeviceBinding, Ma
         viewModel.deviceType().observe(this, listDeviceType -> {
             addDeviceAdapter.submitList(listDeviceType);
         });
-        viewModel.numberSerial().observe(this, serial -> {
-            serialNumber = serial;
+        viewModel.deviceModel().observe(this,deviceModel -> {
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+            String phoneNumber = sharedPreferences.getString(Constant.KEY_PHONE_NUMBER_PREF,Constant.EMPTY_STRING);
+            viewModel.addDeviceToUser(deviceModel, phoneNumber);
+            device = deviceModel;
+        });
+
+        viewModel.addDeviceToUserSuccess.observe(this, isSuccess -> {
+            if (isSuccess) {
+                onLoading(false);
+                Intent intent = new Intent();
+                intent.putExtra(Constant.KEY_DEVICE, device);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
         });
 
     }
@@ -53,12 +69,12 @@ public class AddDeviceActivity extends BaseActivity<ActivityAddDeviceBinding, Ma
         viewModel.queryDeviceType();
         binding.rcvDevice.setAdapter(addDeviceAdapter);
         binding.rcvDevice.setLayoutManager(gridLayoutManager);
-//        addDeviceAdapter.setOnItemClickListener(new AddDeviceAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick() {
-//                dialogConfirmFragment.show(getSupportFragmentManager(),DialogConfirmFragment.class.getSimpleName());
-//            }
-//        });
+        addDeviceAdapter.setOnItemClickListener(new AddDeviceAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                DialogView.showDialogSerial(AddDeviceActivity.this, consumer);
+            }
+        });
 //        dialogConfirmFragment.setOnPasswordEnteredListener(password -> {
 //            if (serialNumber.equals(password)) {
 //                openActivity(MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TOP, Intent.FLAG_ACTIVITY_CLEAR_TASK, Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -80,4 +96,15 @@ public class AddDeviceActivity extends BaseActivity<ActivityAddDeviceBinding, Ma
         });
 
     }
+
+    private Consumer<String> consumer = s -> {
+        if (s.isEmpty()) {
+            showToastShort(getString(R.string.serial_empty));
+        } else if (s.length() < 8) {
+            showToastShort(getString(R.string.serial_invalid));
+        } else {
+            viewModel.getDeviceBySerial(Long.parseLong(s));
+            onLoading(true);
+        }
+    };
 }

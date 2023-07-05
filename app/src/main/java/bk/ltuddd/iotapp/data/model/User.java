@@ -8,6 +8,7 @@ public class User {
     private String birthday;
     private String email;
     private String address;
+    private DeviceModel deviceModel;
 
     public User() {
     }
@@ -68,5 +69,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public DeviceModel getDeviceModel() {
+        return deviceModel;
+    }
+
+    public void setDeviceModel(DeviceModel deviceModel) {
+        this.deviceModel = deviceModel;
     }
 }

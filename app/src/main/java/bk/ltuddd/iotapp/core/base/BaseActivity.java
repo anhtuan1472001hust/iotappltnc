@@ -139,7 +139,7 @@ public abstract class BaseActivity<VB extends ViewBinding, VM extends BaseViewMo
     public void addDataObserve() {
         viewModel.errorState.observe(this, this::onErrorMessage);
         viewModel.errorMessage.observe(this, this::onErrorMessageId);
-        viewModel.loadingState.observe(this,this::onLoading);
+        viewModel.loadingState.observe(this, this::onLoading);
     }
 
     @Override

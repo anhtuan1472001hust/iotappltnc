@@ -40,5 +40,6 @@
     <color name="grey_light">#9EB6C3</color>
     <color name="green_light"> #008000</color>
     <color name="red">#FF0000</color>
+    <color name="grey_Light">#748792</color>
 
 </resources>

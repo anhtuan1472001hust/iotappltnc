@@ -77,22 +77,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/card_background">
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/rcl_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/size_30"
-                android:layout_marginBottom="@dimen/size_20"
                 android:layout_marginStart="@dimen/size_20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layout_bottom_selected_view"
                 android:layout_marginEnd="@dimen/size_20">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_device"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </androidx.core.widget.NestedScrollView>
+            <include
+                android:id="@+id/layout_bottom_selected_view"
+                layout="@layout/layout_bottom_selected_deviced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/size_5" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

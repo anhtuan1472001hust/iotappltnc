@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import bk.ltuddd.iotapp.R;
 import bk.ltuddd.iotapp.core.recycleview.BaseRecycleAdapter;
 import bk.ltuddd.iotapp.core.recycleview.BaseViewHolder;
-import bk.ltuddd.iotapp.data.model.DeviceType;
 import bk.ltuddd.iotapp.databinding.ItemDeviceTypeBinding;
 import bk.ltuddd.iotapp.utils.Constant;
 

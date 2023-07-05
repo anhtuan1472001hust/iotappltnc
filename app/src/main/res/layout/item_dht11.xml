@@ -23,9 +23,19 @@
             android:id="@+id/image_device"
             android:layout_width="@dimen/size_90"
             android:layout_height="89dp"
-            android:layout_marginTop="@dimen/normal"
+            android:layout_marginTop="@dimen/size_15"
+            android:layout_marginStart="@dimen/size_15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_checked"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:padding="@dimen/size_4"
+            android:visibility="gone"
+            android:src="@drawable/item_checkable_selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name_device"

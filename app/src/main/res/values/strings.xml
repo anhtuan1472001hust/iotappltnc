@@ -37,14 +37,22 @@
     <string name="drawer_menu_label_logout">Đăng xuất</string>
     <string name="add_device">Thêm thiết bị</string>
     <string name="agree">Đồng ý</string>
+    <string name="btn_continue">Tiếp tục</string>
     <string name="dialog_cancel">Hủy</string>
     <string name="empty_password">Bạn chưa nhập mã kích hoạt</string>
     <string name="invalid_password_length">Mã kích hoạt dài ít nhất 6 ký tự</string>
     <string name="expire_success">Kích hoạt thiết bị thành công</string>
-    <string name="notification">Vui lòng nhập serial thiết bị bạn muốn kích hoạt</string>
+    <string name="notification">Vui lòng nhập số serial của thiết bị</string>
     <string name="serial_fail">Số serial không hợp lệ</string>
+    <string name="serial_empty">Số serial không được để trống</string>
+    <string name="serial_invalid">Số serial phải bao gồm 8 chữ số</string>
+    <string name="serial_not_exist">Số serial không tồn tại</string>
     <string name="state_on">ON</string>
     <string name="state_off">OFF</string>
+    <string name="add_device_success">Thêm thiết bị vào tài khoản thành công</string>
+    <string name="bottom_selected_bar_text_select_all">Chọn tất cả</string>
+    <string name="bottom_selected_bar_text_delete">Xoá</string>
+    <string name="bottom_selected_bar_text_cancel">Huỷ</string>
 
 
 

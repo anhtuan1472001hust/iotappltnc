@@ -1,9 +1,11 @@
 package bk.ltuddd.iotapp.feature.main.ui.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -27,10 +29,20 @@ import bk.ltuddd.iotapp.feature.main.ui.fragment.UserInfoFragment;
 import bk.ltuddd.iotapp.feature.main.viewmodel.MainViewModel;
 import bk.ltuddd.iotapp.utils.Constant;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainAdapter.OnItemClickRemove {
 
     private MainAdapter mainAdapter = new MainAdapter();
-    private GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+    private final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+    private List<Long> listDeviceSerials = new ArrayList<>();
+    private List<DeviceModel> listDevice = new ArrayList<>();
+
+    private List<String> listDeviceName = new ArrayList<>();
+    private static final int REQUEST_CODE = 1;
+
+    private boolean isSelectedAllDevices = false;
+
+
+
 
     @Override
     protected ActivityMainBinding getViewBinding() {
@@ -44,12 +56,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void onCommonViewLoaded() {
-        viewModel.getListDevice();
         binding.rcvDevice.setAdapter(mainAdapter);
         binding.rcvDevice.setLayoutManager(gridLayoutManager);
         mainAdapter.setOnBtnStateLampClick((serial, state) -> {
             viewModel.updateLampState(serial,state);
         });
+        mainAdapter.setOnItemLongClick(deviceModel -> {
+            binding.layoutBottomSelectedView.getRoot().setVisibility(View.VISIBLE);
+            if (deviceModel.isSelected()) {
+                addListDeviceIsRemove(deviceModel);
+            }
+        });
+        mainAdapter.setOnItemClickRemove(this);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+        String phoneNumber = sharedPreferences.getString(Constant.KEY_PHONE_NUMBER_PREF,Constant.EMPTY_STRING);
+        viewModel.getListUserDevice(phoneNumber);
         onLoading(false);
         onClickNavigationDrawer();
     }
@@ -58,9 +79,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void addDataObserve() {
         super.addDataObserve();
 
-        viewModel.listDeviceModel().observe(this, listDevice -> {
-            mainAdapter.submitList(listDevice);
+        viewModel.listUserDeviceModel().observe(this, listUserDevice -> {
+            for (int i = 0; i < listUserDevice.size(); i++) {
+                listDeviceSerials.add(listUserDevice.get(i).getSerial());
+            }
+            viewModel.getListDevice(listDeviceSerials);
         });
+
+        viewModel.listDeviceModel().observe(this, listDeviceModel -> {
+            mainAdapter.submitList(listDeviceModel);
+        });
+
 
 
     }
@@ -91,11 +120,53 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         });
 
         binding.btnAdd.setOnClickListener(v -> {
-            openActivity(AddDeviceActivity.class);
+            openActivityForResult(AddDeviceActivity.class,REQUEST_CODE);
             viewModel.queryDeviceType();
 
         });
+
+        binding.layoutBottomSelectedView.imgCancel.setOnClickListener(v -> {
+            binding.layoutBottomSelectedView.getRoot().setVisibility(View.GONE);
+            binding.layoutBottomSelectedView.imgAddAllDevices.setSelected(false);
+            mainAdapter.onClickCancel();
+        });
+
+        binding.layoutBottomSelectedView.imgAddAllDevices.setOnClickListener(v -> {
+            binding.layoutBottomSelectedView.imgAddAllDevices.setSelected(!isSelectedAllDevices);
+            mainAdapter.setSelectedAllDevices(!isSelectedAllDevices);
+            isSelectedAllDevices = !isSelectedAllDevices;
+        });
+
+        binding.layoutBottomSelectedView.imgDeleteScene.setOnClickListener(v -> {
+            for (int i = 0; i < viewModel.listDeviceSelected.size(); i++) {
+                listDeviceName.add(viewModel.listDeviceSelected.get(i).getName());
+            }
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+            String phoneNumber = sharedPreferences.getString(Constant.KEY_PHONE_NUMBER_PREF,Constant.EMPTY_STRING);
+            viewModel.removeDevice(listDeviceName, phoneNumber);
+            binding.layoutBottomSelectedView.getRoot().setVisibility(View.GONE);
+            mainAdapter.removeDevices(viewModel.listDeviceSelected);
+            mainAdapter.onClickCancel();
+        });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    DeviceModel deviceModel = (DeviceModel) data.getSerializableExtra(Constant.KEY_DEVICE);
+                    listDevice.clear();
+                    listDevice.add(deviceModel);
+                    mainAdapter.submitList(listDevice);
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // Xử lý khi Activity B bị hủy
+            }
+        }
+    }
+
 
     private void onClickNavigationDrawer() {
         Window window = getWindow();
@@ -130,5 +201,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
             }
         });
+    }
+
+    private void addListDeviceIsRemove(DeviceModel deviceModel) {
+
+            if (!viewModel.listDeviceSelected.contains(deviceModel)) {
+                viewModel.listDeviceSelected.add(deviceModel);
+            }
+    }
+
+    @Override
+    public void setOnItemClickRemove(Boolean is) {
+        Log.e("Allo", String.valueOf(is));
     }
 }

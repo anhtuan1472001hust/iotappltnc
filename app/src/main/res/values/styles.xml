@@ -166,6 +166,23 @@
         <item name="android:background">@drawable/bg_button_corner_30_border_blue</item>
     </style>
 
+    <!-- Style cardview -->
+    <style name="CardViewBorder" parent="CardView.Light">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">@dimen/size_8</item>
+        <item name="cardCornerRadius">@dimen/size_14</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="AppThemeNew.DialogTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
+    </style>
+
 
 
 </resources>

@@ -9,11 +9,25 @@ public class Constant {
     public static final String SHARED_PREFERENCE_FILE_NAME = "Iot_app_sharedPreferences";
     public static final String DHT11 = "DHT11";
     public static final String SMART_LIGHT = "LAMP";
+    public static final String KEY_DEVICE = "device";
 
     public static final String TYPE_SENSOR = "Sensor";
 
     public static final String TYPE_SMART_LIGHT = "SmartLight";
     public static final int VIEW_TYPE_DHT11 = 1;
     public static final int VIEW_TYPE_LAMP = 2;
+
+    public static final String NODE_DEVICE = "Device";
+    public static final String NODE_DEVICE_SERIAL = "serial";
+    public static final String NODE_DEVICE_TYPE = "DeviceType";
+    public static final String NODE_LAMP_STATE = "state";
+    public static final String NODE_USER_DEVICE = "device";
+    public static final String NODE_USER = "users";
+    public static final String NODE_USER_NAME = "name";
+    public static final String NODE_USER_DEVICE_SERIAL = "deviceSerial";
+    public static final String NODE_USER_EMAIL = "email";
+    public static final String NODE_USER_ADDRESS = "address";
+    public static final String NODE_USER_BIRTHDAY = "birthday";
+    public static final String NODE_USER_PHONE_NUMBER = "phoneNumber";
 
 }
