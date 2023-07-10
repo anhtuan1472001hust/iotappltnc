@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Được gọi khi dữ liệu thay đổi trên Firebase Realtime Database
-                // Ở đây, bạn có thể trích xuất thông số nhiệt độ và độ ẩm từ dataSnapshot và cập nhật giao diện người dùng
+                // Ở đây, có thể trích xuất thông số nhiệt độ và độ ẩm từ dataSnapshot và cập nhật giao diện người dùng
                 if (dataSnapshot.child("humid").getValue() != null && dataSnapshot.child("temp").getValue() != null) {
                     Log.e("Bello","change");
                     long nhietDo = (long) dataSnapshot.child("temp").getValue();
