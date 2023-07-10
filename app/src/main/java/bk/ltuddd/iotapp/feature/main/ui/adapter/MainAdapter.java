@@ -38,6 +38,11 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
 
     private OnItemClickRemove onItemClickRemove;
 
+    private OnSensorChange onSensorChange;
+
+    private long temp;
+    private long humid;
+
     @Override
     public BaseViewHolder<?> createViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
          if (viewType == VIEW_TYPE_DHT11) {
@@ -73,8 +78,8 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
         public void bindData(int position) {
             super.bindData(position);
             DeviceModel deviceModel = mData.get(position);
-            getViewBinding().tvHumidity.setText(formatHumid(deviceModel.getHumid()));
-            getViewBinding().tvTemperature.setText(formatTemp(deviceModel.getTemp()));
+            getViewBinding().tvHumidity.setText(formatHumid(humid));
+            getViewBinding().tvTemperature.setText(formatTemp(temp));
             getViewBinding().imageDevice.setImageResource(R.drawable.sensor);
 
         }
@@ -226,5 +231,16 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
         modeSelectedDevices = false;
         notifyDataSetChanged();
     }
+
+    public interface OnSensorChange {
+
+    }
+
+    public void setOnSensorChange(long temp, long humid) {
+        this.temp = temp;
+        this.humid = humid;
+        notifyDataSetChanged();
+    }
+
 
 }

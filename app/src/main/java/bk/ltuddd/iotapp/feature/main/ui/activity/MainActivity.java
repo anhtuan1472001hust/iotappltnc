@@ -15,6 +15,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private static final int REQUEST_CODE = 1;
 
     private boolean isSelectedAllDevices = false;
+
+    private DatabaseReference mDatabase;
 
 
 
@@ -73,6 +80,31 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         viewModel.getListUserDevice(phoneNumber);
         onLoading(false);
         onClickNavigationDrawer();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("Device").child("Device1"); // Thay "thongSo" bằng tên nút chứa dữ liệu của bạn trên Firebase Realtime Database
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Được gọi khi dữ liệu thay đổi trên Firebase Realtime Database
+                // Ở đây, bạn có thể trích xuất thông số nhiệt độ và độ ẩm từ dataSnapshot và cập nhật giao diện người dùng
+                if (dataSnapshot.child("humid").getValue() != null && dataSnapshot.child("temp").getValue() != null) {
+                    Log.e("Bello","change");
+                    long nhietDo = (long) dataSnapshot.child("temp").getValue();
+                    Log.e("Temp", String.valueOf(nhietDo));
+
+                    long doAm = (long) dataSnapshot.child("humid").getValue();
+                    // Cập nhật giao diện người dùng với các giá trị nhietDo và doAm mới
+                    mainAdapter.setOnSensorChange(nhietDo,doAm);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
 
     @Override
