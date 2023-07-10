@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mukesh.OnOtpCompletionListener;
 
 import bk.ltuddd.iotapp.R;
@@ -16,6 +20,10 @@ import bk.ltuddd.iotapp.feature.auth.viewmodel.AuthViewModel;
 import bk.ltuddd.iotapp.utils.Constant;
 
 public class ValidateOtpActivity extends BaseActivity<ActivityValidateOtpBinding, AuthViewModel> {
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     private OnOtpCompletionListener mOnOtpCompletionListener = otp -> {
         onLoading(true);
@@ -63,6 +71,19 @@ public class ValidateOtpActivity extends BaseActivity<ActivityValidateOtpBinding
         binding.edtOTP.setClickable(true);
         binding.edtOTP.setOtpCompletionListener(mOnOtpCompletionListener);
         sendOtp();
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        // Set up the authentication state listener
+//        // User is already authenticated, navigate away from the login screen
+//        mAuthListener = firebaseAuth -> {
+//            onLoading(true);
+//            FirebaseUser user = firebaseAuth.getCurrentUser();
+//            if (user != null) {
+//                // User is already authenticated, navigate away from the login screen
+//                openActivity(ConfigureAccountActivity.class);
+//                finish();
+//            }
+//        };
     }
 
     @Override
@@ -112,5 +133,19 @@ public class ValidateOtpActivity extends BaseActivity<ActivityValidateOtpBinding
         binding.edtOTP.clearComposingText();
         binding.edtOTP.setText(Constant.EMPTY_STRING);
         sendOtp();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if (mAuthListener != null) {
+//            mAuth.removeAuthStateListener(mAuthListener);
+//        }
     }
 }

@@ -1,5 +1,7 @@
 package bk.ltuddd.iotapp.feature.auth.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,7 @@ public class AuthRepositoryImpl implements AuthRepository{
     public Completable sendOtp(PhoneAuthOptions phoneAuthOptions) {
         return Completable.create( emitter -> {
             PhoneAuthProvider.verifyPhoneNumber(phoneAuthOptions);
+            Log.e("Hello",phoneAuthOptions.toString());
             emitter.onComplete();
                 }
         );
@@ -51,17 +54,15 @@ public class AuthRepositoryImpl implements AuthRepository{
 
     @Override
     public Single<Boolean> verifyOtp(PhoneAuthCredential phoneAuthCredential, String otpCode) {
-        return Single.create( emitter -> FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        String otpToken = phoneAuthCredential.getSmsCode();
-                        if (otpCode.equals(otpToken)) {
-                            emitter.onSuccess(true);
-                        }
-                    } else {
-                        emitter.onError(task.getException());
-                    }
-                })
+        return Single.create( emitter -> {
+            String otpToken = phoneAuthCredential.getSmsCode();
+            Log.e("Bello",otpToken);
+            if (otpCode.equals(otpToken)) {
+                emitter.onSuccess(true);
+            } else {
+                emitter.onSuccess(false);
+            }
+                }
         );
     }
 

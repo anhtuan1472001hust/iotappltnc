@@ -149,9 +149,11 @@ public class AuthViewModel extends BaseViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(isSuccess -> {
+                            Log.e("Bello","success");
                                     validateOtpSuccess.setValue(isSuccess);
                                 }, throwable -> {
-                                    validateOtpSuccess.setValue(false);
+                            Log.e("Bello","failed");
+                            setErrorStringId(R.string.activity_send_otp_expired_otp_code);
                                 }
                         )
         );

@@ -99,6 +99,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         binding.navHeaderMain.tvLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             binding.dlLayout.closeDrawer(GravityCompat.START);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+            sharedPreferences.edit().putString(Constant.KEY_PHONE_NUMBER_PREF, Constant.EMPTY_STRING).apply();
             openActivity(LoginActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK,Intent.FLAG_ACTIVITY_NEW_TASK,Intent.FLAG_ACTIVITY_CLEAR_TASK);
         });
         binding.navHeaderMain.ivEmail.setOnClickListener(v -> {
