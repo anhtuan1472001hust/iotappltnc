@@ -69,12 +69,7 @@ public class AddDeviceActivity extends BaseActivity<ActivityAddDeviceBinding, Ma
         viewModel.queryDeviceType();
         binding.rcvDevice.setAdapter(addDeviceAdapter);
         binding.rcvDevice.setLayoutManager(gridLayoutManager);
-        addDeviceAdapter.setOnItemClickListener(new AddDeviceAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick() {
-                DialogView.showDialogSerial(AddDeviceActivity.this, consumer);
-            }
-        });
+        addDeviceAdapter.setOnItemClickListener(() -> DialogView.showDialogSerial(AddDeviceActivity.this, consumer));
 //        dialogConfirmFragment.setOnPasswordEnteredListener(password -> {
 //            if (serialNumber.equals(password)) {
 //                openActivity(MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TOP, Intent.FLAG_ACTIVITY_CLEAR_TASK, Intent.FLAG_ACTIVITY_NEW_TASK);

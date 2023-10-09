@@ -1,10 +1,12 @@
 package bk.ltuddd.iotapp.feature.main.repository;
 
 import java.util.List;
+import java.util.concurrent.Flow;
 
 import bk.ltuddd.iotapp.data.model.DeviceModel;
 import bk.ltuddd.iotapp.data.model.User;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface MainRepository {
@@ -18,5 +20,9 @@ public interface MainRepository {
     Single<Boolean> updateUserDevice(DeviceModel deviceModel, String phoneNumber);
     Single<List<DeviceModel>> getListUserDevice(String phoneNumber);
     Completable removeDevice(List<String> listDeviceName, String phoneNumber);
+
+    Single<List<Long>> getListSensorSerial(String type, String uid);
+
+    Single<List<DeviceModel>> observeHumidTemperature(List<Long> serials);
 
 }

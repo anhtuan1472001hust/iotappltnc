@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class DeviceModel implements Serializable {
 
-    private double humid;
-    private double temp;
+    private long humid;
+    private long temp;
     private long serial;
     private String name;
     private String type;
@@ -43,11 +43,11 @@ public class DeviceModel implements Serializable {
         this.name = name;
     }
 
-    public double getTemp() {
+    public long getTemp() {
         return temp;
     }
 
-    public void setTemp(double temp) {
+    public void setTemp(long temp) {
         this.temp = temp;
     }
 
@@ -63,11 +63,11 @@ public class DeviceModel implements Serializable {
     }
 
 
-    public double getHumid() {
+    public long getHumid() {
         return humid;
     }
 
-    public void setHumid(double humid) {
+    public void setHumid(long humid) {
         this.humid = humid;
     }
 

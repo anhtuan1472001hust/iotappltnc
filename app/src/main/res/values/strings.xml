@@ -53,6 +53,26 @@
     <string name="bottom_selected_bar_text_select_all">Chọn tất cả</string>
     <string name="bottom_selected_bar_text_delete">Xoá</string>
     <string name="bottom_selected_bar_text_cancel">Huỷ</string>
+    <string name="activity_temperature_sensor_battery">Pin thiết bị:</string>
+    <string name="activity_temperature_textview_temperature">Nhiệt độ</string>
+    <string name="activity_temperature_textview_humidity">Độ ẩm</string>
+    <string name="activity_temperature_textview_sensor_statistics">Thống kê cảm biến</string>
+    <string name="add_auto_celsius_unit">°C</string>
+    <string name="alarm">Hẹn giờ</string>
+    <string name="stop_watch">Đếm ngược</string>
+    <string name="count_down_off">Tắt</string>
+    <string name="count_down_on">Bật</string>
+    <string name="activity_add_timer_tv_time">Thời gian</string>
+    <string name="activity_add_timer_tv_action">Hành động</string>
+    <string name="activity_add_count_down_delete_schedule">Xóa đếm ngược</string>
+    <string name="activity_add_count_down_done">Xong</string>
+    <string name="activity_add_count_down_title">Thêm đếm ngược</string>
+    <string name="activity_add_timer_title">Thêm hẹn giờ</string>
+    <string name="two_digit_format">%02d</string>
+    <string name="fragment_setting_child_devices_title_toolbar">Cài đặt chung</string>
+    <string name="fragment_setting_child_devices_name">Tên thiết bị</string>
+    <string name="fragment_setting_child_devices_remove_device">Xóa thiết bị</string>
+
 
 
 

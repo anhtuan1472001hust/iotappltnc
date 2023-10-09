@@ -34,6 +34,8 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
 
     private OnItemLongClick onItemLongClick;
 
+    private OnItemClick onItemClick;
+
     private boolean modeSelectedDevices = false;
 
     private OnItemClickRemove onItemClickRemove;
@@ -148,6 +150,11 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
                 ivChecked.setVisibility(View.GONE);
                 mData.get(position).setSelected(false);
             }
+            itemView.setOnClickListener(v -> {
+                if (onItemClick != null) {
+                    onItemClick.setOnItemClick(deviceModel);
+                }
+            });
             itemView.setOnLongClickListener(v -> {
                 modeSelectedDevices = true;
                 mData.get(position).setSelected(true);
@@ -158,16 +165,16 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
                 notifyDataSetChanged();
                 return false;
             });
-            itemView.setOnClickListener(v -> {
-                modeSelectedDevices = true;
-                ivChecked.setSelected(!deviceModel.isSelected());
-                deviceModel.setSelected(!deviceModel.isSelected());
-                Log.e("Bello",String.valueOf(deviceModel.isSelected()));
-                if (onItemClickRemove != null) {
-                    onItemClickRemove.setOnItemClickRemove(deviceModel.isSelected());
-                }
-                notifyDataSetChanged();
-            });
+//            itemView.setOnClickListener(v -> {
+//                modeSelectedDevices = true;
+//                ivChecked.setSelected(!deviceModel.isSelected());
+//                deviceModel.setSelected(!deviceModel.isSelected());
+//                Log.e("Bello",String.valueOf(deviceModel.isSelected()));
+//                if (onItemClickRemove != null) {
+//                    onItemClickRemove.setOnItemClickRemove(deviceModel.isSelected());
+//                }
+//                notifyDataSetChanged();
+//            });
         }
     }
 
@@ -187,6 +194,9 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
         void setOnClickBtnState(long serial, int state);
     }
 
+    public interface OnItemClick {
+        void setOnItemClick(DeviceModel deviceModel);
+    }
     public interface OnItemLongClick {
         void setOnItemLongClick(DeviceModel deviceModel);
     }
@@ -205,6 +215,10 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
 
     public void setOnItemLongClick(OnItemLongClick onItemLongClick) {
         this.onItemLongClick = onItemLongClick;
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -236,10 +250,29 @@ public class MainAdapter extends BaseRecycleAdapter<DeviceModel> {
 
     }
 
-    public void setOnSensorChange(long temp, long humid) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void setOnTempChange(long temp) {
         this.temp = temp;
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setOnHumidChange(long humid) {
         this.humid = humid;
         notifyDataSetChanged();
+    }
+
+    public void notifyItemsChanged(List<DeviceModel> deviceModelList) {
+        for (DeviceModel deviceModel: deviceModelList) {
+            for (int index = 0; index < mData.size(); index++) {
+                DeviceModel item = mData.get(index);
+                if (item.getSerial() == deviceModel.getSerial()) {
+                    mData.get(index).setHumid(deviceModel.getHumid());
+                    mData.get(index).setTemp(deviceModel.getTemp());
+                    notifyItemChanged(index);
+                }
+            }
+        }
     }
 
 

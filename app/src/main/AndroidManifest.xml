@@ -61,6 +61,36 @@
             android:screenOrientation="locked"
             android:launchMode="singleTop">
         </activity>
+        <activity android:name=".feature.sensor.ui.TemperatureSensorActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity android:name=".feature.smartlight.ui.activity.SmartLightActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity android:name=".feature.countdown.ui.activity.CountDownActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
+
+
+        <activity android:name=".feature.countdown.ui.activity.AddCountDownActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity android:name=".feature.smartlight.ui.activity.SettingSmartLightActivity"
+            android:exported="true"
+            android:screenOrientation="locked"
+            android:launchMode="singleTop">
+        </activity>
 
     </application>
 

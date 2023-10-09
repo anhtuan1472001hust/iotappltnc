@@ -30,4 +30,16 @@ public class Constant {
     public static final String NODE_USER_BIRTHDAY = "birthday";
     public static final String NODE_USER_PHONE_NUMBER = "phoneNumber";
 
+    public static final String NODE_TYPE = "type";
+
+    public static final String NODE_HUMID = "humid";
+
+    public static final String NODE_TEMPERATURE = "temp";
+
+    public static final String KEY_DEVICE_MODEL = "deviceModel";
+
+    public static final String NODE_DEVICE_NAME = "name";
+
+    public static final String KEY_DEVICE_NAME = "KEY_DEVICE_NAME";
+
 }

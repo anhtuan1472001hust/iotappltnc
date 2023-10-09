@@ -1,6 +1,8 @@
 package bk.ltuddd.iotapp.feature.main.repository;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,11 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Flow;
 
 import bk.ltuddd.iotapp.data.model.DeviceModel;
 import bk.ltuddd.iotapp.data.model.User;
 import bk.ltuddd.iotapp.utils.Constant;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -200,9 +204,8 @@ public class MainRepositoryImpl implements MainRepository {
                             String userUid = userSnapshot.getKey();
                             DatabaseReference userDeviceSerial = userReference.child(userUid)
                                     .child(Constant.NODE_USER_DEVICE)
-                                    .child(deviceModel.getName())
-                                    .child(Constant.NODE_DEVICE_SERIAL);
-                            userDeviceSerial.setValue(deviceModel.getSerial())
+                                    .child(deviceModel.getName());
+                            userDeviceSerial.setValue(deviceModel)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             emitter.onSuccess(true);
@@ -282,6 +285,72 @@ public class MainRepositoryImpl implements MainRepository {
                 }
             });
         });
+    }
+
+    @Override
+    public Single<List<Long>> getListSensorSerial(String type, String uid) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constant.NODE_USER).child(uid).child(Constant.NODE_USER_DEVICE);
+        return Single.create(emitter -> {
+            Query phoneNumberQuery = databaseReference.orderByChild(Constant.NODE_TYPE).equalTo(type);
+            phoneNumberQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        List<Long> listSensorSerial = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                Long serial = dataSnapshot.child(Constant.NODE_DEVICE_SERIAL).getValue(Long.class);
+                                if (serial != null) {
+                                    listSensorSerial.add(serial);
+                                }
+
+                        }
+                        emitter.onSuccess(listSensorSerial);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        });
+    }
+
+    @Override
+    public Single<List<DeviceModel>> observeHumidTemperature(List<Long> serials) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference(Constant.NODE_DEVICE);
+        return Single.create(
+                emitter -> {
+                    for (long serial : serials) {
+                        Query sensorQuery = databaseReference.orderByChild(Constant.NODE_DEVICE_SERIAL).equalTo(serial);
+                        sensorQuery.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    List<DeviceModel> listDeviceModel = new ArrayList<>();
+                                    for (DataSnapshot sensorSnapshot : snapshot.getChildren()) {
+                                        DeviceModel deviceModel = sensorSnapshot.getValue(DeviceModel.class);
+                                        if (deviceModel != null) {
+                                            Log.e("Bello","change: " + deviceModel.getSerial());
+                                            listDeviceModel.add(deviceModel);
+                                        }
+
+                                    }
+                                    emitter.onSuccess(listDeviceModel);
+                                } else {
+                                    emitter.onError(new Exception());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+                }
+        );
     }
 
 

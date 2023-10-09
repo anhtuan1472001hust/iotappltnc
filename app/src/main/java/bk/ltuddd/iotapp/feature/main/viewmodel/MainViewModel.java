@@ -1,6 +1,8 @@
 package bk.ltuddd.iotapp.feature.main.viewmodel;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -55,6 +57,16 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public List<DeviceModel> listDeviceSelected = new ArrayList<>();
+
+    private MutableLiveData<List<DeviceModel>> _sensorState = new MutableLiveData<>();
+    public LiveData<List<DeviceModel>> sensorState() {
+        return _sensorState;
+    }
+
+    private MutableLiveData<List<Long>> _sensorSerials= new MutableLiveData<>();
+    public LiveData<List<Long>> sensorSerials() {
+        return _sensorSerials;
+    }
 
 
     public void updateUserInfo(User user, String userUid) {
@@ -162,12 +174,41 @@ public class MainViewModel extends BaseViewModel {
         );
     }
 
+    public void getListSensorSerial(String type, String uid) {
+        compositeDisposable.add(
+                mainRepository.getListSensorSerial(type, uid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                listSensorSerial -> {
+                                    _sensorSerials.setValue(listSensorSerial);
+                                }, throwable -> setErrorStringId(R.string.error_send_otp_from_firebase)
+
+                        )
+        );
+    }
+
     public void removeDevice(List<String> listDeviceName, String phoneNumber) {
         compositeDisposable.add(
                 mainRepository.removeDevice(listDeviceName, phoneNumber)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe()
+        );
+    }
+
+    public void observeTempHumid(List<Long> serials) {
+        compositeDisposable.add(
+                mainRepository.observeHumidTemperature(serials)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                listSensor -> {
+                                    _sensorState.setValue(listSensor);
+                                    Log.e("Bello","abcd");
+                                },
+                                throwable -> Log.e("Error: ", "Observe sensor failed" + throwable.toString())
+                        )
         );
     }
 
