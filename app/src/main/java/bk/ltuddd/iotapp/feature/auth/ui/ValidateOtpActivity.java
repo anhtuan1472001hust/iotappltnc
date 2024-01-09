@@ -34,7 +34,7 @@ public class ValidateOtpActivity extends BaseActivity<ActivityValidateOtpBinding
 
     private final String timeFormat = "%02d:%02d";
 
-    private int mCountDown = 60;
+    private int mCountDown = 90;
 
     @Override
     protected ActivityValidateOtpBinding getViewBinding() {
@@ -97,9 +97,9 @@ public class ValidateOtpActivity extends BaseActivity<ActivityValidateOtpBinding
     }
 
     private void setOtpDuration() {
-        mCountDown = 60;
+        mCountDown = 90;
         if (countDownTimer == null) {
-            countDownTimer = new CountDownTimer(60000, 1000) {
+            countDownTimer = new CountDownTimer(90000, 1000) {
                 @SuppressLint("DefaultLocale")
                 @Override
                 public void onTick(long millisUntilFinished) {
